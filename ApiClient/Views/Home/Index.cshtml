@@ -1,0 +1,56 @@
+﻿@{
+    //ViewData["Title"] = "API Microservice Status";
+    //var serviceStatus = ViewData["ServiceStatus"] as Dictionary<string, string>;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+<h1>Microservice Status</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Service</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Users Service</td>
+        </tr>
+        <tr>
+            <td>Orders Service</td>
+        </tr>
+        <tr>
+            <td>Products Service</td> 
+        </tr>
+    </tbody>
+</table>
+
+<style>
+    table {
+        width: 50%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+    th {
+        background-color: #f4f4f4;
+    }
+    td {
+        text-align: center;
+    }
+    .online {
+        color: green;
+    }
+    .offline {
+        color: red;
+    }
+</style>

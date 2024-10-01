@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "Robot";
+    List<RobotModel> robotsAvailable = ViewData["robotsAvailable"] as List<RobotModel>;
+}
+
+<h1>Robot Pick and Drop</h1>
+<br />
+<br />
+<div id="container">
+    <div id="left">
+        <h2>Configuration of robot and detection model</h2>
+        <label for="robot-select">Choose a robot:</label>
+        <br />
+        <select name="robot" id="robot-select" onchange="initRobot(this.value)">
+            @if (robotsAvailable != null && robotsAvailable.Count > 0)
+            {
+                foreach (var robot in robotsAvailable)
+                {
+                    string jsonConfig = Newtonsoft.Json.JsonConvert.SerializeObject(robot.Configuration);
+                    string jsonAngleFreedom = Newtonsoft.Json.JsonConvert.SerializeObject(robot.AngleFreedom);
+                    <option value="@robot.Name" data-configuration="@Html.Raw(jsonConfig)" data-anglefreedom="@Html.Raw(jsonAngleFreedom)">@robot.Name</option>
+                }
+            }
+            else
+            {
+                <option value="">No robots available</option>
+            }
+        </select>
+        <br />
+        <label for="model-select">Choose a model:</label>
+        <br />
+        <select name="model" id="model-select" onchange="initModel(this.value)">
+            <option value="yolov8n">YOLOV8 cocodataset</option>
+            <option value="nutYolov8m">YOLOV8 custom nut dataset</option>
+        </select>
+        <br /> <br />
+        <h2>Targets configuration </h2>
+        <form onsubmit="generateTargetBaseOnImage(event)">
+            <table>
+               
+                <tbody>
+                    <tr>
+                        <td><input type="file" id="image" name="file" accept=".jpg, .jpeg" required /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="" id="preview" /></td>
+                        <td><canvas id="canvasYoloTest"></canvas></td>
+                    </tr>
+                    <tr>
+                        <td><button type="submit">Detection and set target</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </form>
+
+        <script src="~/js/model.js"></script>
+        <br />
+        <button onclick="launchPickAndDrop()">Pick and Drop</button>
+
+    </div>
+    <div id="right"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script src="~/js/robotGUI.js"></script>
+
+<style>
+    #container {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+
+    #left {
+        width: 50%;
+        display: block;
+    }
+
+    #right {
+        padding: 20px;
+        width: 40%;
+    }
+
+    canvas {
+        display: block;
+    }
+
+</style>

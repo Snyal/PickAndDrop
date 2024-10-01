@@ -1,0 +1,69 @@
+@{
+    ViewData["Title"] = "API Microservice Status";
+    var serviceStatus = ViewData["ServiceStatus"] as Dictionary<string, string>;
+}
+
+<h1>MicroService Status</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Services</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Robots Service</td>
+            <td>@serviceStatus["Robots"]</td>
+        </tr>
+        <tr>
+            <td>Yolo Service</td>
+            <td>@serviceStatus["Yolo"]</td>
+        </tr>
+    </tbody>
+</table>
+
+<h1>Test YOLOV8 detection</h1>
+
+<label for="model-select">Choose a model:</label>
+<select name="model" id="model-select" onchange="initModel(this.value)">
+    <option value="yolov8n">YOLOV8 cocodataset</option>
+    <option value="nutYolov8m">YOLOV8 custom nut dataset</option>
+</select>
+
+
+<form onsubmit="detect(event)">
+    <table>
+        <thead>
+            <tr>
+                <th>Inference on Yolov8 model</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="file" id="image" name="file" accept=".jpg, .jpeg" required /></td>
+                <td><button type="submit">Detect</button></td>
+            </tr>
+            <tr>
+                <td><img src="" id="preview"/></td>
+                <td><canvas id="canvasYoloTest"></canvas></td>
+            </tr>
+        </tbody>
+    </table>
+   
+</form>
+
+<script src="~/js/model.js"></script>
+
+<style>
+
+    .online {
+        text-align: center;
+        color: green;
+    }
+    .offline {
+        text-align: center;
+        color: red;
+    }
+</style>
